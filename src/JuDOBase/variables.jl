@@ -1,15 +1,17 @@
-# Static
-struct StaticVariable{F} <: JuDOVariable{F}
-    ℓ::F
-    u::F
+export DynamicVariable, StaticVariable
+
+struct DynamicVariable
+    parameterization::Integer
+    forceContinuity::Bool
+    bounds::Tuple{Real,Real}
+
+    initial::Union{Nothing,Real}
+    terminal::Union{Nothing,Real}
+
+    guess
 end
 
-# Dynamic
-struct DynamicVariable{F} <: JuDOVariable{F}
-    ℓ::F
-    u::F
-    initial::Tuple{F,F}
-    terminal::Tuple{F,F}
+struct StaticVariable
+    bounds::Tuple{Real,Real}
+    guess::Real
 end
-
-# Macros

@@ -1,19 +1,23 @@
 module JuDOBase
 
+using Reexport
+@reexport using Symbolics
 using RecipesBase
 
-# Variables
-abstract type JuDOVariable{F<:AbstractFloat} end
+@variables(t);
+Dot = Differential(t);
+export t, Dot
+
+abstract type AbstractDOProblem end
+
+abstract type AbstractDOSolution end
+
+function solve(prob::AbstractDOProblem, alg; kwargs...) end
+
 include("variables.jl")
-export StaticVariable, DynamicVariable
-
-# Problems
-abstract type JuDOProblem{F<:AbstractFloat} end
+#include("system.jl")
 include("problems.jl")
-export DFProblem
-
-# Solutions
-abstract type JuDOSolution{F<:AbstractFloat} end
 include("solutions.jl")
 
-end
+
+end #module

@@ -1,13 +1,10 @@
-# Dynamic Optimisation Problem
+export FixedTimeDOProblem
 
-# Dynamic Feasibility Problem
-struct DFProblem{F} <: JuDOProblem{F}
-    tspan::Tuple{F,F}
-    x::Vector{DynamicVariable{F}}
-    u::Vector{DynamicVariable{F}}
-    p::Vector{StaticVariable{F}}
-    F
-    ∇F!
+mutable struct FixedTimeDOProblem <: AbstractDOProblem
+    tspan::Tuple{Real, Real}
+
+    differentialVariables::Vector{DynamicVariable}
+    algebraicVariables::Vector{DynamicVariable}
+
+    residuals::Function #F(d, dDot, a, t)
 end
-
-# Constructors
