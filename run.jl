@@ -1,5 +1,5 @@
 using Interesso
-using Plots
+#=using Plots
 
 dParameterization = 3;
 q1 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.96592582628, 0.0);
@@ -71,3 +71,4 @@ pu2 = plot(solution.algebraicVariables[2]);
 pu3 = plot(solution.algebraicVariables[3]);
 l = @layout [a; b; c];
 plot(pu1, pu2, pu3, layout=l)
+=#
