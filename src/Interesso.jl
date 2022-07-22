@@ -27,8 +27,7 @@ include("MOI/flexibleMesh.jl")
 
 include("mesh/meshSolution.jl")
 
-@reexport using JuDOBase
-include("interfaces/judo.jl")
+include("JuDOBase/JuDOBase.jl")
 
 #@reexport using DiffEqBase
 #inlcude("interfaces/diffEq.jl")
