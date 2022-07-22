@@ -1,5 +1,5 @@
 using Interesso
-#=using Plots
+using Plots
 
 dParameterization = 3;
 q1 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.96592582628, 0.0);
@@ -7,7 +7,8 @@ q2 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.0, 0.0);
 q3 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.0, 0.0);
 q4 = DynamicVariable(dParameterization, true, (-Inf, Inf), 1.0, 0.2588190451, 1.0);
 ω1 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.0, 0.0);
-ω2 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.0, 0.0);
+ω2 = DynamicVari
+able(dParameterization, true, (-Inf, Inf), 0.0, 0.0, 0.0);
 ω3 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.0, 0.0);
 
 aParameterization = 1;
