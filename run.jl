@@ -46,15 +46,16 @@ s = Interesso.init(dop, Interesso.LeastSquares(
     meshFlexibility=nothing));
 
 #Flexible Mesh
-intervals = 4;
-flex = 0.3;
+#=intervals = 6;
+flex = 0.9;
 s = Interesso.init(dop, Interesso.LeastSquares(
     meshFlexibility=((tf/intervals)*(1.0-flex), (tf/intervals)*(1.0+flex))
-));
+));=#
 
 solution = Interesso.solve!(s);
 
 ## Plotting
+#=
 pq1 = plot(solution.differentialVariables[1]);
 pq2 = plot(solution.differentialVariables[2]);
 pq3 = plot(solution.differentialVariables[3]);
@@ -65,10 +66,12 @@ plot(pq1, pq2, pq3, pq4, layout=l)
 plot(solution.differentialVariables[5])
 plot!(solution.differentialVariables[6])
 plot!(solution.differentialVariables[7])
+=#
 
 pu1 = plot(solution.algebraicVariables[1]);
 pu2 = plot(solution.algebraicVariables[2]);
 pu3 = plot(solution.algebraicVariables[3]);
 l = @layout [a; b; c];
-plot(pu1, pu2, pu3, layout=l)
-=#
+pl=plot(pu1, pu2, pu3, layout=l);
+savefig(pl, "C:/Users/Lucian/Documents/GitHub/Interesso.jl/inputs.pdf");
+#
