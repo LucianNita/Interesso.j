@@ -1,6 +1,6 @@
 using Interesso
 using Plots
-
+#=
 dParameterization = 3;
 q1 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.96592582628, 0.0);
 q2 = DynamicVariable(dParameterization, true, (-Inf, Inf), 0.0, 0.0, 0.0);
@@ -74,4 +74,57 @@ pu3 = plot(solution.algebraicVariables[3]);
 l = @layout [a; b; c];
 pl=plot(pu1, pu2, pu3, layout=l);
 savefig(pl, "C:/Users/Lucian/Documents/GitHub/Interesso.jl/inputs.pdf");
-#
+=#
+
+x = DynamicVariable(3, true, (-Inf, Inf), 0.0, ℯ-1, 1.0);
+u = DynamicVariable(2, false, (-1.0, 5.0), nothing, nothing, 0.0);
+
+tspan = (0.0, 2.0);
+
+function F(d, dDot, a, t)
+    x = d[1];
+    xDot = dDot[1]; 
+
+    u = a[1];
+
+    if t<=1
+        res1 = xDot - u;
+        res2 = u - 1.0;
+    else
+        res1 = xDot - u;
+        res2 = u - exp(t-1) + 1.0
+    end
+    return [res1, res2]
+end
+
+dop = FixedTimeDOProblem(tspan, [x], [u], F);
+N = [5,7];#,9,11,13,25,41];
+fixed=0.0*N;
+flexible=0.0*N;
+oneoverN= 1 ./ N;
+
+for i=1:length(N)
+    #Fixed Mesh
+    display(N[i]);
+    s = Interesso.init(dop, Interesso.LeastSquares(
+        stages=N[i],
+        meshFlexibility=nothing));
+    solution = Interesso.solve!(s);
+    fixed[i]=solution.optimizerResults["objective"];
+
+    #Flexible Mesh
+    intervals = N[i];
+    flex = 0.5;
+    s = Interesso.init(dop, Interesso.LeastSquares(
+        meshFlexibility=((tf/intervals)*(1.0-flex), (tf/intervals)*(1.0+flex))
+    ));
+    solution = Interesso.solve!(s);
+    flexible[i]=solution.optimizerResults["objective"];#
+end
+
+scatter(oneoverN,fixed,color=:red,xscale=:log10,yscale=:log10);
+scatter!(oneoverN,flexible,color=:blue,xscale=:log10,yscale=:log10,legend=false);
+#plot(solution.algebraicVariables[1])
+#plot(solution.differentialVariables[1])
+
+
